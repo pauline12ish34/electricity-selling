@@ -1,19 +1,19 @@
 const db = require("../models");
-const Token = db.tokens;
+const Transaction = db.transactions;
 
 // Create and Save a new Transaction
 exports.create = (req, res) => {
     // Validate request
-    if (!req.body.status&& !req.body.id) {
+    if (!req.body.money&& !req.body.meterNumber) {
         res.status(400).send({ message: "meter or money can not be empty!" });
         return;
     }
 
     // Save Tutorial in the database
-    Token.create({
+    Transaction.create({
         id: req.body.id,
-        dateExp: req.body.dateExp,
-        status: req.body.status })
+        money: req.body.money,
+        meter: req.body.meter })
         .then((data) => {
             res.status(201).send(data);
         })
@@ -29,7 +29,7 @@ exports.create = (req, res) => {
 // Retrieve all Tutorials from the database.
 exports.findAll = (req, res) => {
 
-    Token.find()
+    Transaction.find()
         .then((data) => {
             if (data.length > 0) {
                 res.status(200).send(data);
@@ -51,7 +51,7 @@ exports.findAll = (req, res) => {
 exports.findOne = (req, res) => {
     const id = req.params.id;
 
-    Token.findById(id)
+    Transaction.findById(id)
         .then((data) => {
             if (!data)
                 res.status(404).send({
