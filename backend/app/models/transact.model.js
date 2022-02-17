@@ -2,8 +2,10 @@ module.exports = (mongoose) => {
     var schema = mongoose.Schema(
         {
             id: String,
-            dateExp : Date,
-            status: String,
+            money : Number,
+            meter: Number, 
+            days:Number,    
+            dateExp :Date,
             
         },
         { timestamps: true }
@@ -15,6 +17,6 @@ module.exports = (mongoose) => {
         return object;
     });
 
-    const Token = mongoose.model("tutorial", schema);
-    return Token;
+    const Transaction = mongoose.model("tutorial", schema);
+    return Transaction;
 };
