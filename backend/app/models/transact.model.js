@@ -1,9 +1,10 @@
 module.exports = (mongoose) => {
     var schema = mongoose.Schema(
         {
-            id: String,
-            money : Number,
+           
+            money : String,
             meter: Number, 
+            token: String,
             days:Number,    
             dateExp :Date,
             

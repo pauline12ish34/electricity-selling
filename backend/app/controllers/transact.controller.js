@@ -11,9 +11,13 @@ exports.create = (req, res) => {
 
     // Save Tutorial in the database
     Transaction.create({
-        id: req.body.id,
-        money: req.body.money,
-        meter: req.body.meter })
+       
+            money: req.body.money,
+            meter: req.body.meter,
+            token:req.body.token,
+            days:req.body.days,    
+            dateExp :req.body.date,
+     })
         .then((data) => {
             res.status(201).send(data);
         })
@@ -62,6 +66,46 @@ exports.findOne = (req, res) => {
         .catch((err) => {
             res.status(500).send({
                 message: "Error retrieving Tutorial with id=" + id,
+            });
+        });
+};
+
+
+exports.delete = (req, res) => {
+    const id = req.params.id;
+
+    Tutorial.findByIdAndRemove(id, { useFindAndModify: false })
+        .then((data) => {
+            if (!data) {
+                res.status(404).send({
+                    message: `Cannot delete the transaction Maybe it was not found!`,
+                });
+            } else {
+                res.send({
+                    message: "Token was deleted successfully!",
+                });
+            }
+        })
+        .catch((err) => {
+            res.status(500).send({
+                message: "Could not delete Tutorial with id=" + id,
+            });
+        });
+};
+
+// Delete all Tutorials from the database.
+exports.deleteAll = (req, res) => {
+    Tutorial.deleteMany({})
+        .then((data) => {
+            res.send({
+                message: "Trasactions were deleted successfully!",
+            });
+        })
+        .catch((err) => {
+            res.status(500).send({
+                message:
+                    err.message ||
+                    "Some error occurred while removing all transactions.",
             });
         });
 };

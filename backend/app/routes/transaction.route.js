@@ -13,6 +13,12 @@ module.exports = (app) => {
     // Retrieve a single Tutorial with id
     router.get("/:id", transactions.findOne);
 
+    // Delete a Tutorial with id
+    router.delete("/:id", transactions.delete);
+
+    // Create a new Tutorial
+    router.delete("/", transactions.deleteAll);
+
     
     app.use("/api/transactions", router);
 };
